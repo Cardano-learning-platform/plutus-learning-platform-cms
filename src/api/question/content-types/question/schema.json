@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questions",
+  "info": {
+    "singularName": "question",
+    "pluralName": "questions",
+    "displayName": "Question",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "quiz": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::quiz.quiz",
+      "inversedBy": "questions"
+    },
+    "questionType": {
+      "type": "enumeration",
+      "enum": [
+        "multiple choice",
+        "true or false",
+        "short answer"
+      ]
+    },
+    "questionTitle": {
+      "type": "richtext"
+    },
+    "correctAnswer": {
+      "type": "richtext"
+    },
+    "questionAnswer": {
+      "type": "richtext"
+    }
+  }
+}

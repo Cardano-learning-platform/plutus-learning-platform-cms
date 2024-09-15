@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reading_informations",
+  "info": {
+    "singularName": "reading-information",
+    "pluralName": "reading-informations",
+    "displayName": "ReadingInformation"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "lessons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lesson.lesson"
+    },
+    "readingTime": {
+      "type": "integer"
+    },
+    "profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::profile.profile",
+      "inversedBy": "reading_informations"
+    },
+    "course": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::course.course"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  }
+}

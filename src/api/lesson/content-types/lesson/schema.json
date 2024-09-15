@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lessons",
+  "info": {
+    "singularName": "lesson",
+    "pluralName": "lessons",
+    "displayName": "Lesson",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "chapter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chapter.chapter",
+      "inversedBy": "lessons"
+    },
+    "course": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course.course",
+      "inversedBy": "lessons"
+    },
+    "lessonTitle": {
+      "type": "string"
+    },
+    "lessonDescription": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "lessonTitle"
+    },
+    "lessonContent": {
+      "type": "richtext"
+    },
+    "quizzes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::quiz.quiz",
+      "mappedBy": "lesson"
+    },
+    "lessonType": {
+      "type": "enumeration",
+      "enum": [
+        "video",
+        "text"
+      ]
+    },
+    "lesson_histories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lesson-history.lesson-history",
+      "mappedBy": "lesson"
+    }
+  }
+}

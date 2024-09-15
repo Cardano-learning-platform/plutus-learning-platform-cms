@@ -788,6 +788,532 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiArchivedUserArchivedUser extends Schema.CollectionType {
+  collectionName: 'archived_users';
+  info: {
+    singularName: 'archived-user';
+    pluralName: 'archived-users';
+    displayName: 'archived_user';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user_id: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::archived-user.archived-user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::archived-user.archived-user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'Category';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categoryDescription: Attribute.String;
+    categoryImage: Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    categoryTitle: Attribute.String;
+    slug: Attribute.UID<'api::category.category', 'categoryTitle'>;
+    courses: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::course.course'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiChapterChapter extends Schema.CollectionType {
+  collectionName: 'chapters';
+  info: {
+    singularName: 'chapter';
+    pluralName: 'chapters';
+    displayName: 'Chapter';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    course: Attribute.Relation<
+      'api::chapter.chapter',
+      'manyToOne',
+      'api::course.course'
+    >;
+    chapterName: Attribute.String;
+    chapterDescription: Attribute.String;
+    lessons: Attribute.Relation<
+      'api::chapter.chapter',
+      'oneToMany',
+      'api::lesson.lesson'
+    >;
+    slug: Attribute.UID<'api::chapter.chapter', 'chapterName'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::chapter.chapter',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::chapter.chapter',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCourseCourse extends Schema.CollectionType {
+  collectionName: 'courses';
+  info: {
+    singularName: 'course';
+    pluralName: 'courses';
+    displayName: 'Course';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    courseName: Attribute.String;
+    description: Attribute.Text;
+    tag: Attribute.String;
+    chapters: Attribute.Relation<
+      'api::course.course',
+      'oneToMany',
+      'api::chapter.chapter'
+    >;
+    lessons: Attribute.Relation<
+      'api::course.course',
+      'oneToMany',
+      'api::lesson.lesson'
+    >;
+    slug: Attribute.UID<'api::course.course', 'courseName'>;
+    category: Attribute.Relation<
+      'api::course.course',
+      'manyToOne',
+      'api::category.category'
+    >;
+    price: Attribute.Decimal;
+    courseImageUrl: Attribute.String;
+    lesson_histories: Attribute.Relation<
+      'api::course.course',
+      'oneToMany',
+      'api::lesson-history.lesson-history'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::course.course',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::course.course',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiLessonLesson extends Schema.CollectionType {
+  collectionName: 'lessons';
+  info: {
+    singularName: 'lesson';
+    pluralName: 'lessons';
+    displayName: 'Lesson';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    chapter: Attribute.Relation<
+      'api::lesson.lesson',
+      'manyToOne',
+      'api::chapter.chapter'
+    >;
+    course: Attribute.Relation<
+      'api::lesson.lesson',
+      'manyToOne',
+      'api::course.course'
+    >;
+    lessonTitle: Attribute.String;
+    lessonDescription: Attribute.String;
+    slug: Attribute.UID<'api::lesson.lesson', 'lessonTitle'>;
+    lessonContent: Attribute.RichText;
+    quizzes: Attribute.Relation<
+      'api::lesson.lesson',
+      'oneToMany',
+      'api::quiz.quiz'
+    >;
+    lessonType: Attribute.Enumeration<['video', 'text']>;
+    lesson_histories: Attribute.Relation<
+      'api::lesson.lesson',
+      'oneToMany',
+      'api::lesson-history.lesson-history'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::lesson.lesson',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::lesson.lesson',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiLessonHistoryLessonHistory extends Schema.CollectionType {
+  collectionName: 'lesson_histories';
+  info: {
+    singularName: 'lesson-history';
+    pluralName: 'lesson-histories';
+    displayName: 'lessonHistory';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    lesson: Attribute.Relation<
+      'api::lesson-history.lesson-history',
+      'manyToOne',
+      'api::lesson.lesson'
+    >;
+    profile: Attribute.Relation<
+      'api::lesson-history.lesson-history',
+      'manyToOne',
+      'api::profile.profile'
+    >;
+    course: Attribute.Relation<
+      'api::lesson-history.lesson-history',
+      'manyToOne',
+      'api::course.course'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::lesson-history.lesson-history',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::lesson-history.lesson-history',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProfileProfile extends Schema.CollectionType {
+  collectionName: 'profiles';
+  info: {
+    singularName: 'profile';
+    pluralName: 'profiles';
+    displayName: 'profile';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    email: Attribute.String;
+    first_name: Attribute.String;
+    last_name: Attribute.String;
+    avatar_url: Attribute.String;
+    userId: Attribute.UID;
+    quiz_performances: Attribute.Relation<
+      'api::profile.profile',
+      'oneToMany',
+      'api::quiz-performance.quiz-performance'
+    >;
+    lesson_histories: Attribute.Relation<
+      'api::profile.profile',
+      'oneToMany',
+      'api::lesson-history.lesson-history'
+    >;
+    transactions: Attribute.Relation<
+      'api::profile.profile',
+      'oneToMany',
+      'api::transaction.transaction'
+    >;
+    reading_informations: Attribute.Relation<
+      'api::profile.profile',
+      'oneToMany',
+      'api::reading-information.reading-information'
+    >;
+    tour_status: Attribute.JSON;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::profile.profile',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::profile.profile',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuestionQuestion extends Schema.CollectionType {
+  collectionName: 'questions';
+  info: {
+    singularName: 'question';
+    pluralName: 'questions';
+    displayName: 'Question';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    quiz: Attribute.Relation<
+      'api::question.question',
+      'manyToOne',
+      'api::quiz.quiz'
+    >;
+    questionType: Attribute.Enumeration<
+      ['multiple choice', 'true or false', 'short answer']
+    >;
+    questionTitle: Attribute.RichText;
+    correctAnswer: Attribute.RichText;
+    questionAnswer: Attribute.RichText;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuizQuiz extends Schema.CollectionType {
+  collectionName: 'quizzes';
+  info: {
+    singularName: 'quiz';
+    pluralName: 'quizzes';
+    displayName: 'Quiz';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    quizTitle: Attribute.String;
+    slug: Attribute.UID<'api::quiz.quiz', 'quizTitle'>;
+    quizDescription: Attribute.String;
+    quizDifficulty: Attribute.Enumeration<['easy', 'medium', 'hard']>;
+    questions: Attribute.Relation<
+      'api::quiz.quiz',
+      'oneToMany',
+      'api::question.question'
+    >;
+    lesson: Attribute.Relation<
+      'api::quiz.quiz',
+      'manyToOne',
+      'api::lesson.lesson'
+    >;
+    quiz_performances: Attribute.Relation<
+      'api::quiz.quiz',
+      'oneToMany',
+      'api::quiz-performance.quiz-performance'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuizPerformanceQuizPerformance
+  extends Schema.CollectionType {
+  collectionName: 'quiz_performances';
+  info: {
+    singularName: 'quiz-performance';
+    pluralName: 'quiz-performances';
+    displayName: 'quizPerformance';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    profile: Attribute.Relation<
+      'api::quiz-performance.quiz-performance',
+      'manyToOne',
+      'api::profile.profile'
+    >;
+    quiz: Attribute.Relation<
+      'api::quiz-performance.quiz-performance',
+      'manyToOne',
+      'api::quiz.quiz'
+    >;
+    quizTimeTaken: Attribute.Integer;
+    score: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::quiz-performance.quiz-performance',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::quiz-performance.quiz-performance',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReadingInformationReadingInformation
+  extends Schema.CollectionType {
+  collectionName: 'reading_informations';
+  info: {
+    singularName: 'reading-information';
+    pluralName: 'reading-informations';
+    displayName: 'ReadingInformation';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    lessons: Attribute.Relation<
+      'api::reading-information.reading-information',
+      'oneToMany',
+      'api::lesson.lesson'
+    >;
+    readingTime: Attribute.Integer;
+    profile: Attribute.Relation<
+      'api::reading-information.reading-information',
+      'manyToOne',
+      'api::profile.profile'
+    >;
+    course: Attribute.Relation<
+      'api::reading-information.reading-information',
+      'oneToOne',
+      'api::course.course'
+    >;
+    timestamp: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::reading-information.reading-information',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::reading-information.reading-information',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTransactionTransaction extends Schema.CollectionType {
+  collectionName: 'transactions';
+  info: {
+    singularName: 'transaction';
+    pluralName: 'transactions';
+    displayName: 'Transaction';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    profile: Attribute.Relation<
+      'api::transaction.transaction',
+      'manyToOne',
+      'api::profile.profile'
+    >;
+    transactionId: Attribute.String;
+    transactionAmount: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::transaction.transaction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::transaction.transaction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -806,6 +1332,18 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::archived-user.archived-user': ApiArchivedUserArchivedUser;
+      'api::category.category': ApiCategoryCategory;
+      'api::chapter.chapter': ApiChapterChapter;
+      'api::course.course': ApiCourseCourse;
+      'api::lesson.lesson': ApiLessonLesson;
+      'api::lesson-history.lesson-history': ApiLessonHistoryLessonHistory;
+      'api::profile.profile': ApiProfileProfile;
+      'api::question.question': ApiQuestionQuestion;
+      'api::quiz.quiz': ApiQuizQuiz;
+      'api::quiz-performance.quiz-performance': ApiQuizPerformanceQuizPerformance;
+      'api::reading-information.reading-information': ApiReadingInformationReadingInformation;
+      'api::transaction.transaction': ApiTransactionTransaction;
     }
   }
 }

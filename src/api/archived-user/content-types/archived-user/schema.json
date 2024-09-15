@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "archived_users",
+  "info": {
+    "singularName": "archived-user",
+    "pluralName": "archived-users",
+    "displayName": "archived_user"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user_id": {
+      "type": "string"
+    }
+  }
+}

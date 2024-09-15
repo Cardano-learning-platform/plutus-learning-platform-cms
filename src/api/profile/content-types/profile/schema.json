@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "profiles",
+  "info": {
+    "singularName": "profile",
+    "pluralName": "profiles",
+    "displayName": "profile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "avatar_url": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "uid"
+    },
+    "quiz_performances": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::quiz-performance.quiz-performance",
+      "mappedBy": "profile"
+    },
+    "lesson_histories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lesson-history.lesson-history",
+      "mappedBy": "profile"
+    },
+    "transactions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::transaction.transaction",
+      "mappedBy": "profile"
+    },
+    "reading_informations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reading-information.reading-information",
+      "mappedBy": "profile"
+    },
+    "tour_status": {
+      "type": "json"
+    }
+  }
+}
